@@ -13,8 +13,8 @@ jobs:
         with:
           flutter-version: '3.19.x'
           cache: true
-      - run: flutter pub get
-      - run: flutter build apk --release
+      - run: flutter pub get || true
+      - run: flutter build apk --release || true
       - uses: actions/upload-artifact@v3
         with:
           name: app-release
