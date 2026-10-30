@@ -21,8 +21,47 @@ class NoorQuranApp extends StatelessWidget {
   }
 }
 
-class MainLibraryView extends StatelessWidget {
+class MainLibraryView extends StatefulWidget {
   const MainLibraryView({super.key});
+
+  @override
+  State<MainLibraryView> createState() => _MainLibraryViewState();
+}
+
+class _MainLibraryViewState extends State<MainLibraryView> {
+  int _currentIndex = 0;
+
+  final List<Widget> _screens = [
+    const LibraryBody(),
+    const Center(child: Text('المصحف الشريف', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold))),
+    const Center(child: Text('المشغل الصوتى والتلاوات', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold))),
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: _screens[_currentIndex],
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _currentIndex,
+        selectedItemColor: const Color(0xFF2E5A44),
+        unselectedItemColor: Colors.grey,
+        onTap: (index) {
+          setState(() {
+            _currentIndex = index;
+          });
+        },
+        items: const [
+          BottomNavigationBarItem(icon: Icon(Icons.library_books), label: 'المكتبة'),
+          BottomNavigationBarItem(icon: Icon(Icons.book), label: 'المصحف'),
+          BottomNavigationBarItem(icon: Icon(Icons.headphones), label: 'التلاوات'),
+        ],
+      ),
+    );
+  }
+}
+
+class LibraryBody extends StatelessWidget {
+  const LibraryBody({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -57,22 +96,10 @@ class MainLibraryView extends StatelessWidget {
             style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.black54),
           ),
           const SizedBox(height: 12),
-          _buildSurahCard(
-            title: 'سورة البقرة',
-            subtitle: 'Sura Al-Baqaraah • Meccan - Medinan',
-          ),
-          _buildSurahCard(
-            title: 'سورة العمرة',
-            subtitle: 'Surah Allam • 8 ayahs - Medinan',
-          ),
-          _buildSurahCard(
-            title: 'سورة الفميرة',
-            subtitle: 'Surah Al-Bamah • Meccan - Medinan',
-          ),
-          _buildSurahCard(
-            title: 'سورة البقرة',
-            subtitle: 'Surah Al-Ravab • 6 ayahs - Medinan',
-          ),
+          _buildSurahCard(title: 'سورة البقرة', subtitle: 'Sura Al-Baqaraah • Meccan - Medinan'),
+          _buildSurahCard(title: 'سورة آل عمران', subtitle: 'Surah Ali ' Imran • Medinan'),
+          _buildSurahCard(title: 'سورة النساء', subtitle: 'Surah An-Nisa • Medinan'),
+          _buildSurahCard(title: 'سورة المائدة', subtitle: 'Surah Al-Maidah • Medinan'),
         ],
       ),
     );
@@ -95,9 +122,9 @@ class MainLibraryView extends StatelessWidget {
           subtitle,
           style: const TextStyle(fontSize: 12, color: Colors.black54),
         ),
-        trailing: CircleAvatar(
-          backgroundColor: const Color(0xFF2E5A44),
-          child: const Icon(Icons.play_arrow, color: Colors.white),
+        trailing: const CircleAvatar(
+          backgroundColor: Color(0xFF2E5A44),
+          child: Icon(Icons.play_arrow, color: Colors.white),
         ),
         onTap: () {},
       ),
